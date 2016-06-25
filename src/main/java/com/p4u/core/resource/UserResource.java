@@ -56,6 +56,13 @@ public class UserResource {
 		}
 		return user;
 	}
+	
+	@GET
+	@Path("search-by-email/{email}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<User> search(@PathParam("email") String email){
+		return userRepository.findByEmail(email);
+	}
 
 
 }
