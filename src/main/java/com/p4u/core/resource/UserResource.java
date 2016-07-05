@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.p4u.core.beans.LoginResult;
 import com.p4u.core.dao.UserRepository;
 import com.p4u.core.model.User;
 
@@ -39,11 +40,24 @@ public class UserResource {
 			@PathParam("facebook") String facebook, @PathParam("address") String address) {
 		User result = new User();
 		result.setEmail(email);
+		result.setUsername(email);
 		result.setPassword(password);
 		result.setFacebookUserName(facebook);
 		result.setAddress(address);
 		return userRepository.save(result);
 	}
+	
+	@POST
+	@Path("login/{email}/{password}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public LoginResult register(@PathParam("email") String email, @PathParam("password") String password){
+		List<User> result =  userRepository.findByEmail(email);
+		if(result == null || result.isEmpty() || result.size()>1){
+			return new LoginResult(false);
+		}
+		return new LoginResult(result.iterator().next().getPassword().equals(password));
+	}
+	
 	
 	@PUT
 	@Path("change-password/{user-id}/{new-password}")

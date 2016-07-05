@@ -10,26 +10,29 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name="usuario")
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = -1236408066017630792L;
 
 	@Id
-	@Column(name="user_id")
+	@Column(name="id")
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name = "user_email")
+	@Column(name = "email")
 	private String email;
 	
-	@Column(name = "user_password")
+	@Column(name = "username")
+	private String username;
+	
+	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "user_facebook")
+	@Column(name = "facebook")
 	private String facebookUserName;
 	
-	@Column(name = "user_address")
+	@Column(name = "domicilio")
 	private String address;
 
 	public Long getId() {
@@ -38,6 +41,14 @@ public class User implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getEmail() {
