@@ -288,7 +288,6 @@ ALTER TABLE `item`
 ALTER TABLE `item_comprado_usuario`
   ADD CONSTRAINT `item_comprado_usuario_ibfk_2` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`),
   ADD CONSTRAINT `item_comprado_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
-search-by-email/mnforlenza@gmail.com
 --
 -- Filtros para la tabla `item_notifiacion_usuario`
 --
