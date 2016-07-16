@@ -1,3 +1,11 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.10.12
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.5.238.130:3306
+-- Generation Time: Jul 10, 2016 at 03:02 AM
+-- Server version: 5.5.45
+-- PHP Version: 5.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -9,27 +17,26 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
-
--- Base de datos: `taller-proyectos`
+-- Database: `p4u`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categoria`
+-- Table structure for table `categoria`
 --
 
 CREATE TABLE IF NOT EXISTS `categoria` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(128) NOT NULL,
   `descripcion` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categoria_agrupa_preferencias`
+-- Table structure for table `categoria_agrupa_preferencias`
 --
 
 CREATE TABLE IF NOT EXISTS `categoria_agrupa_preferencias` (
@@ -42,23 +49,23 @@ CREATE TABLE IF NOT EXISTS `categoria_agrupa_preferencias` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `empresa`
+-- Table structure for table `empresa`
 --
 
 CREATE TABLE IF NOT EXISTS `empresa` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `codigo_compania` int(11) NOT NULL,
   `nombre` varchar(128) NOT NULL,
   `password` varchar(128) NOT NULL,
-  `posicion` point NOT NULL,
+  `posicion` point DEFAULT NULL,
   `domicilio` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `empresa_paga_servicio`
+-- Table structure for table `empresa_paga_servicio`
 --
 
 CREATE TABLE IF NOT EXISTS `empresa_paga_servicio` (
@@ -75,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `empresa_paga_servicio` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `empresa_recibe_servicio`
+-- Table structure for table `empresa_recibe_servicio`
 --
 
 CREATE TABLE IF NOT EXISTS `empresa_recibe_servicio` (
@@ -89,23 +96,24 @@ CREATE TABLE IF NOT EXISTS `empresa_recibe_servicio` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `item`
+-- Table structure for table `item`
 --
 
 CREATE TABLE IF NOT EXISTS `item` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_regalo` int(11) NOT NULL,
-  `codigo_producto` int(11) NOT NULL,
-  `estado` varchar(128) NOT NULL,
-  `codigo_regalo` int(11) NOT NULL,
+  `codigo_producto` varchar(20) DEFAULT NULL,
+  `estado` varchar(128) NOT NULL DEFAULT 'Sin Canjear',
+  `codigo_regalo` varchar(11) NOT NULL DEFAULT 'MXCR1',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `codigo_producto` (`codigo_producto`),
   KEY `id_regalo` (`id_regalo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `item_comprado_usuario`
+-- Table structure for table `item_comprado_usuario`
 --
 
 CREATE TABLE IF NOT EXISTS `item_comprado_usuario` (
@@ -119,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `item_comprado_usuario` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `item_notifiacion_usuario`
+-- Table structure for table `item_notifiacion_usuario`
 --
 
 CREATE TABLE IF NOT EXISTS `item_notifiacion_usuario` (
@@ -137,20 +145,20 @@ CREATE TABLE IF NOT EXISTS `item_notifiacion_usuario` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preferencia`
+-- Table structure for table `preferencia`
 --
 
 CREATE TABLE IF NOT EXISTS `preferencia` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(128) NOT NULL,
   `descripcion` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `regalo`
+-- Table structure for table `regalo`
 --
 
 CREATE TABLE IF NOT EXISTS `regalo` (
@@ -163,15 +171,15 @@ CREATE TABLE IF NOT EXISTS `regalo` (
   `imagen` text NOT NULL,
   `cantidad_inicial` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
-  `gratis` tinyint(1) NOT NULL,
+  `gratis` int(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_empresa` (`id_empresa`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `regalo_pertenece_categoria`
+-- Table structure for table `regalo_pertenece_categoria`
 --
 
 CREATE TABLE IF NOT EXISTS `regalo_pertenece_categoria` (
@@ -184,35 +192,35 @@ CREATE TABLE IF NOT EXISTS `regalo_pertenece_categoria` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `servicio`
+-- Table structure for table `servicio`
 --
 
 CREATE TABLE IF NOT EXISTS `servicio` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(128) NOT NULL,
   `precio` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tarjeta`
+-- Table structure for table `tarjeta`
 --
 
 CREATE TABLE IF NOT EXISTS `tarjeta` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `banco` varchar(128) NOT NULL,
   `numero` bigint(20) NOT NULL,
   `codigo_seguridad` smallint(6) NOT NULL,
   `tipo_tarjeta` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Table structure for table `usuario`
 --
 
 CREATE TABLE IF NOT EXISTS `usuario` (
@@ -223,12 +231,12 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `facebook` varchar(128) NOT NULL,
   `domicilio` varchar(256) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario_registro_tarjeta`
+-- Table structure for table `usuario_registro_tarjeta`
 --
 
 CREATE TABLE IF NOT EXISTS `usuario_registro_tarjeta` (
@@ -241,7 +249,7 @@ CREATE TABLE IF NOT EXISTS `usuario_registro_tarjeta` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario_tiene_preferencia`
+-- Table structure for table `usuario_tiene_preferencia`
 --
 
 CREATE TABLE IF NOT EXISTS `usuario_tiene_preferencia` (
@@ -252,80 +260,77 @@ CREATE TABLE IF NOT EXISTS `usuario_tiene_preferencia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `categoria_agrupa_preferencias`
+-- Constraints for table `categoria_agrupa_preferencias`
 --
 ALTER TABLE `categoria_agrupa_preferencias`
-  ADD CONSTRAINT `categoria_agrupa_preferencias_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`),
-  ADD CONSTRAINT `categoria_agrupa_preferencias_ibfk_1` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencia` (`id`);
+  ADD CONSTRAINT `categoria_agrupa_preferencias_ibfk_1` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencia` (`id`),
+  ADD CONSTRAINT `categoria_agrupa_preferencias_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`);
 
 --
--- Filtros para la tabla `empresa_paga_servicio`
+-- Constraints for table `empresa_paga_servicio`
 --
 ALTER TABLE `empresa_paga_servicio`
-  ADD CONSTRAINT `empresa_paga_servicio_ibfk_2` FOREIGN KEY (`id_servicio`) REFERENCES `servicio` (`id`),
-  ADD CONSTRAINT `empresa_paga_servicio_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`);
+  ADD CONSTRAINT `empresa_paga_servicio_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`),
+  ADD CONSTRAINT `empresa_paga_servicio_ibfk_2` FOREIGN KEY (`id_servicio`) REFERENCES `servicio` (`id`);
 
 --
--- Filtros para la tabla `empresa_recibe_servicio`
+-- Constraints for table `empresa_recibe_servicio`
 --
 ALTER TABLE `empresa_recibe_servicio`
-  ADD CONSTRAINT `empresa_recibe_servicio_ibfk_2` FOREIGN KEY (`id_servicio`) REFERENCES `servicio` (`id`),
-  ADD CONSTRAINT `empresa_recibe_servicio_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`);
+  ADD CONSTRAINT `empresa_recibe_servicio_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`),
+  ADD CONSTRAINT `empresa_recibe_servicio_ibfk_2` FOREIGN KEY (`id_servicio`) REFERENCES `servicio` (`id`);
 
 --
--- Filtros para la tabla `item`
+-- Constraints for table `item`
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`id_regalo`) REFERENCES `regalo` (`id`);
 
 --
--- Filtros para la tabla `item_comprado_usuario`
+-- Constraints for table `item_comprado_usuario`
 --
 ALTER TABLE `item_comprado_usuario`
-  ADD CONSTRAINT `item_comprado_usuario_ibfk_2` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`),
-  ADD CONSTRAINT `item_comprado_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
---
--- Filtros para la tabla `item_notifiacion_usuario`
---
-ALTER TABLE `item_notifiacion_usuario`
-  ADD CONSTRAINT `item_notifiacion_usuario_ibfk_2` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`),
-  ADD CONSTRAINT `item_notifiacion_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
+  ADD CONSTRAINT `item_comprado_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `item_comprado_usuario_ibfk_2` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`);
 
 --
--- Filtros para la tabla `regalo`
+-- Constraints for table `item_notifiacion_usuario`
+--
+ALTER TABLE `item_notifiacion_usuario`
+  ADD CONSTRAINT `item_notifiacion_usuario_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `item_notifiacion_usuario_ibfk_2` FOREIGN KEY (`id_item`) REFERENCES `item` (`id`);
+
+--
+-- Constraints for table `regalo`
 --
 ALTER TABLE `regalo`
   ADD CONSTRAINT `regalo_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `empresa` (`id`);
 
 --
--- Filtros para la tabla `regalo_pertenece_categoria`
+-- Constraints for table `regalo_pertenece_categoria`
 --
 ALTER TABLE `regalo_pertenece_categoria`
-  ADD CONSTRAINT `regalo_pertenece_categoria_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`),
-  ADD CONSTRAINT `regalo_pertenece_categoria_ibfk_1` FOREIGN KEY (`id_regalo`) REFERENCES `regalo` (`id`);
+  ADD CONSTRAINT `regalo_pertenece_categoria_ibfk_1` FOREIGN KEY (`id_regalo`) REFERENCES `regalo` (`id`),
+  ADD CONSTRAINT `regalo_pertenece_categoria_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id`);
 
 --
--- Filtros para la tabla `usuario_registro_tarjeta`
+-- Constraints for table `usuario_registro_tarjeta`
 --
 ALTER TABLE `usuario_registro_tarjeta`
-  ADD CONSTRAINT `usuario_registro_tarjeta_ibfk_2` FOREIGN KEY (`id_tarjeta`) REFERENCES `tarjeta` (`id`),
-  ADD CONSTRAINT `usuario_registro_tarjeta_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
+  ADD CONSTRAINT `usuario_registro_tarjeta_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `usuario_registro_tarjeta_ibfk_2` FOREIGN KEY (`id_tarjeta`) REFERENCES `tarjeta` (`id`);
 
 --
--- Filtros para la tabla `usuario_tiene_preferencia`
+-- Constraints for table `usuario_tiene_preferencia`
 --
 ALTER TABLE `usuario_tiene_preferencia`
-  ADD CONSTRAINT `usuario_tiene_preferencia_ibfk_2` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencia` (`id`),
-  ADD CONSTRAINT `usuario_tiene_preferencia_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`);
+  ADD CONSTRAINT `usuario_tiene_preferencia_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `usuario_tiene_preferencia_ibfk_2` FOREIGN KEY (`id_preferencia`) REFERENCES `preferencia` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-ALTER TABLE `empresa` 
-CHANGE COLUMN `posicion` `posicion` POINT NULL ;
