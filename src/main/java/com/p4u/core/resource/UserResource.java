@@ -1,5 +1,6 @@
 package com.p4u.core.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -15,8 +16,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.p4u.core.beans.LoginResult;
+import com.p4u.core.dao.UserPreferenceRepository;
 import com.p4u.core.dao.UserRepository;
+import com.p4u.core.model.Preference;
 import com.p4u.core.model.User;
+import com.p4u.core.model.UserPreference;
+import com.p4u.core.model.UserPreferenceId;
 
 @Component
 @Path("/user")
@@ -25,6 +30,10 @@ public class UserResource {
 	@Autowired
 	@Qualifier("userRepository")
 	private UserRepository userRepository;
+	
+	@Autowired
+	@Qualifier("userPreferenceRepository")
+	private UserPreferenceRepository userPreferenceRepository;
 
 	@GET
 	@Path("all")
@@ -78,5 +87,28 @@ public class UserResource {
 		return userRepository.findByEmail(email);
 	}
 
-
+	@POST
+	@Path("add-preference/{userId}/{preferenceId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public UserPreference addPreference(@PathParam("userId") Long userId, @PathParam("preferenceId") Long preferenceId){
+		UserPreference result = new UserPreference();
+		UserPreferenceId id = new UserPreferenceId();
+		id.setUserId(userId);
+		id.setPreferenceId(preferenceId);
+		result.setId(id);
+		return userPreferenceRepository.save(result);
+	}
+	
+	@GET
+	@Path("preferences/{userId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Preference> searchPreferences(@PathParam("userId") Long userId){
+		List<Preference> result = new ArrayList<Preference>();
+		List<UserPreference> preferences = userPreferenceRepository.findByUserId(userId);
+		for (UserPreference userPreference : preferences) {
+			result.add(userPreference.getPreference());
+		}
+		return result;
+	}
+	
 }
