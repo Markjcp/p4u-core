@@ -7,7 +7,7 @@
 -- Server version: 5.5.45
 -- PHP Version: 5.3.3
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO"; 
 SET time_zone = "+00:00";
 
 
@@ -38,23 +38,6 @@ INSERT INTO `categoria` (`id`, `nombre`, `descripcion`) VALUES
 (11, 'Viajes', 'Viajes');
 
 --
--- Dumping data for table `categoria_agrupa_preferencias`
---
-
-INSERT INTO `categoria_agrupa_preferencias` (`id_preferencia`, `id_categoria`) VALUES
-(6, 1),
-(7, 1),
-(8, 1),
-(9, 1),
-(10, 4),
-(10, 5),
-(2, 7),
-(3, 7),
-(4, 7),
-(5, 7),
-(11, 7);
-
---
 -- Dumping data for table `empresa`
 --
 
@@ -72,68 +55,6 @@ INSERT INTO `empresa` (`id`, `codigo_compania`, `nombre`, `password`, `posicion`
 (11, 11, 'Despegar', 'despegar', NULL, 'Av Cordoba 222'),
 (12, 12, 'Figurella', 'figurella', NULL, 'Lavalle 127'),
 (13, 13, 'Eyelit', 'Eyelit', NULL, 'Av Corrientes 12253');
-
---
--- Dumping data for table `empresa_paga_servicio`
---
-
-INSERT INTO `empresa_paga_servicio` (`id_empresa`, `id_servicio`, `fecha_alta`, `monto`, `fecha`, `medio_pago`) VALUES
-(1, 3, '2016-07-10 02:02:04', 2000, '0000-00-00 00:00:00', 'Depósito bancario'),
-(5, 2, '2016-07-10 02:02:04', 20000, '0000-00-00 00:00:00', 'Transacción directa Banco Patagonia');
-
---
--- Dumping data for table `empresa_recibe_servicio`
---
-
-INSERT INTO `empresa_recibe_servicio` (`id_empresa`, `id_servicio`, `fecha_baja`) VALUES
-(1, 3, '2016-07-10 02:02:55'),
-(5, 2, '2016-07-10 02:02:55');
-
---
--- Dumping data for table `item`
---
-
-INSERT INTO `item` (`id`, `id_regalo`, `codigo_producto`, `estado`, `codigo_regalo`) VALUES
-(12, 1, 'XXCP15', 'Sin Canjear', 'MXCR1'),
-(13, 8, 'XXCP151', 'Sin Canjear', 'MXCR132'),
-(24, 2, NULL, 'Sin Canjear', 'MXCR1'),
-(25, 13, NULL, 'Sin Canjear', 'MXCR1'),
-(26, 1, NULL, 'Sin Canjear', 'MXCR1241'),
-(27, 1, NULL, 'Sin Canjear', 'MXCR112'),
-(28, 4, NULL, 'Canjeado', 'MXCR133');
-
---
--- Dumping data for table `item_comprado_usuario`
---
-
-INSERT INTO `item_comprado_usuario` (`id_usuario`, `id_item`, `fecha`) VALUES
-(1, 12, '2016-07-10 02:57:26'),
-(2, 26, '2016-07-10 02:57:26');
-
---
--- Dumping data for table `item_notifiacion_usuario`
---
-
-INSERT INTO `item_notifiacion_usuario` (`id_usuario`, `id_item`, `fecha_envio_email`, `email`, `remitente`, `destinatario`, `vencimiento`) VALUES
-(1, 12, '2016-07-10 03:00:09', '', '', '', '0000-00-00 00:00:00'),
-(1, 26, '2016-07-10 03:01:08', 'Te mando una Big Mac para que engordes', 'Lucho', 'Marcos', '2016-07-31 04:00:00'),
-(2, 28, '2016-07-10 02:58:48', '', '', '', '0000-00-00 00:00:00');
-
---
--- Dumping data for table `preferencia`
---
-
-INSERT INTO `preferencia` (`id`, `nombre`, `descripcion`) VALUES
-(2, 'Computadoras y Tablets', ''),
-(3, 'Instrumentos musicales', ''),
-(4, 'Accesorios Celular', ''),
-(5, 'Television y Home Theater', ''),
-(6, 'Bebidas Alcohólicas', ''),
-(7, 'Dulces y caramelos', ''),
-(8, 'Comida', ''),
-(9, 'Gaseosas', ''),
-(10, 'Accesorios y cosméticos', ''),
-(11, 'Audio Portatil', '');
 
 --
 -- Dumping data for table `regalo`
@@ -156,25 +77,33 @@ INSERT INTO `regalo` (`id`, `id_empresa`, `nombre`, `marca`, `tipo`, `precio`, `
 (14, 1, 'Combo McNifica', 'Mc Donalds', 'Sandwich', 130, '', 12000, 12000, 1000);
 
 --
--- Dumping data for table `regalo_pertenece_categoria`
+-- Dumping data for table `item`
 --
 
-INSERT INTO `regalo_pertenece_categoria` (`id_regalo`, `id_categoria`) VALUES
-(1, 1),
-(3, 1),
-(4, 1),
-(14, 1),
-(2, 2),
-(10, 2),
-(6, 3),
-(7, 4),
-(12, 4),
-(12, 5),
-(5, 6),
-(8, 7),
-(13, 8),
-(9, 9),
-(11, 11);
+INSERT INTO `item` (`id`, `id_regalo`, `codigo_producto`, `estado`, `codigo_regalo`) VALUES
+(12, 1, 'XXCP15', 'Sin Canjear', 'MXCR1'),
+(13, 8, 'XXCP151', 'Sin Canjear', 'MXCR132'),
+(24, 2, NULL, 'Sin Canjear', 'MXCR1'),
+(25, 13, NULL, 'Sin Canjear', 'MXCR1'),
+(26, 1, NULL, 'Sin Canjear', 'MXCR1241'),
+(27, 1, NULL, 'Sin Canjear', 'MXCR112'),
+(28, 4, NULL, 'Canjeado', 'MXCR133');
+
+--
+-- Dumping data for table `preferencia`
+--
+
+INSERT INTO `preferencia` (`id`, `nombre`, `descripcion`) VALUES
+(2, 'Computadoras y Tablets', ''),
+(3, 'Instrumentos musicales', ''),
+(4, 'Accesorios Celular', ''),
+(5, 'Television y Home Theater', ''),
+(6, 'Bebidas Alcohólicas', ''),
+(7, 'Dulces y caramelos', ''),
+(8, 'Comida', ''),
+(9, 'Gaseosas', ''),
+(10, 'Accesorios y cosméticos', ''),
+(11, 'Audio Portatil', '');
 
 --
 -- Dumping data for table `servicio`
@@ -200,6 +129,78 @@ INSERT INTO `tarjeta` (`id`, `banco`, `numero`, `codigo_seguridad`, `tipo_tarjet
 INSERT INTO `usuario` (`id`, `username`, `password`, `email`, `facebook`, `domicilio`) VALUES
 (1, 'mnforlenza@gmail.com', 'password', 'mnforlenza@gmail.com', 'miface', '190:102'),
 (2, 'l_sorrentino', 'password', 'sorrentino@fi.uba.ar', 'lucianoS', 'Calle falsa 123');
+
+--
+-- Dumping data for table `categoria_agrupa_preferencias`
+--
+
+INSERT INTO `categoria_agrupa_preferencias` (`id_preferencia`, `id_categoria`) VALUES
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(10, 4),
+(10, 5),
+(2, 7),
+(3, 7),
+(4, 7),
+(5, 7),
+(11, 7);
+
+--
+-- Dumping data for table `empresa_paga_servicio`
+--
+
+INSERT INTO `empresa_paga_servicio` (`id_empresa`, `id_servicio`, `fecha_alta`, `monto`, `fecha`, `medio_pago`) VALUES
+(1, 3, '2016-07-10 02:02:04', 2000, '0000-00-00 00:00:00', 'Depósito bancario'),
+(5, 2, '2016-07-10 02:02:04', 20000, '0000-00-00 00:00:00', 'Transacción directa Banco Patagonia');
+
+--
+-- Dumping data for table `empresa_recibe_servicio`
+--
+
+INSERT INTO `empresa_recibe_servicio` (`id_empresa`, `id_servicio`, `fecha_baja`) VALUES
+(1, 3, '2016-07-10 02:02:55'),
+(5, 2, '2016-07-10 02:02:55');
+
+--
+-- Dumping data for table `item_comprado_usuario`
+--
+
+INSERT INTO `item_comprado_usuario` (`id_usuario`, `id_item`, `fecha`) VALUES
+(1, 12, '2016-07-10 02:57:26'),
+(2, 26, '2016-07-10 02:57:26');
+
+--
+-- Dumping data for table `item_notifiacion_usuario`
+--
+
+INSERT INTO `item_notifiacion_usuario` (`id_usuario`, `id_item`, `fecha_envio_email`, `email`, `remitente`, `destinatario`, `vencimiento`) VALUES
+(1, 12, '2016-07-10 03:00:09', '', '', '', '0000-00-00 00:00:00'),
+(1, 26, '2016-07-10 03:01:08', 'Te mando una Big Mac para que engordes', 'Lucho', 'Marcos', '2016-07-31 04:00:00'),
+(2, 28, '2016-07-10 02:58:48', '', '', '', '0000-00-00 00:00:00');
+
+
+--
+-- Dumping data for table `regalo_pertenece_categoria`
+--
+
+INSERT INTO `regalo_pertenece_categoria` (`id_regalo`, `id_categoria`) VALUES
+(1, 1),
+(3, 1),
+(4, 1),
+(14, 1),
+(2, 2),
+(10, 2),
+(6, 3),
+(7, 4),
+(12, 4),
+(12, 5),
+(5, 6),
+(8, 7),
+(13, 8),
+(9, 9),
+(11, 11);
 
 --
 -- Dumping data for table `usuario_registro_tarjeta`
