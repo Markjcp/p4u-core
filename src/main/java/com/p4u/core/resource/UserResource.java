@@ -62,9 +62,9 @@ public class UserResource {
 	public LoginResult register(@PathParam("email") String email, @PathParam("password") String password){
 		List<User> result =  userRepository.findByEmail(email);
 		if(result == null || result.isEmpty() || result.size()>1){
-			return new LoginResult(false);
+			return new LoginResult(false,null);
 		}
-		return new LoginResult(result.iterator().next().getPassword().equals(password));
+		return new LoginResult(result.iterator().next().getPassword().equals(password),result.iterator().next());
 	}
 	
 	
