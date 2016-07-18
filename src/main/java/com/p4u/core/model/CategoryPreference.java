@@ -20,7 +20,7 @@ public class CategoryPreference implements Serializable{
 	private Long categoryId;
 	
 	@Column(name = "id_preferencia", updatable = false, insertable = false)
-	private Long prefernceId;
+	private Long preferenceId;
 
 	public CategoryPreferenceId getId() {
 		return id;
@@ -38,12 +38,12 @@ public class CategoryPreference implements Serializable{
 		this.categoryId = categoryId;
 	}
 	
-	public Long getPrefernceId() {
-		return prefernceId;
+	public Long getPreferenceId() {
+		return preferenceId;
 	}
 
-	public void setPrefernceId(Long prefernceId) {
-		this.prefernceId = prefernceId;
+	public void setPreferenceId(Long preferenceId) {
+		this.preferenceId = preferenceId;
 	}
 
 	@Override
