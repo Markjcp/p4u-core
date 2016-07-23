@@ -23,8 +23,11 @@ public class Present implements Serializable{
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_empresa" , referencedColumnName = "id")
+	@JoinColumn(name = "id_empresa" , referencedColumnName = "id", insertable = false, updatable = false)
 	private Company company;
+	
+	@Column(name="id_empresa")
+	private Long companyId;
 	
 	@Column(name="nombre")
 	private String name;
@@ -67,6 +70,14 @@ public class Present implements Serializable{
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+	
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getName() {

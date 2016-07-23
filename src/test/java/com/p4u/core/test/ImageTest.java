@@ -28,7 +28,6 @@ public class ImageTest {
 		BufferedImage image = ImageIO.read(resourceInputStream);		
 	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    ImageIO.write(image, "png", baos);
-	    byte[] imageData = baos.toByteArray();
 	}
 
 }
