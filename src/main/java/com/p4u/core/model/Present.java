@@ -41,6 +41,9 @@ public class Present implements Serializable{
 	@Column(name="imagen")
 	private byte[] image;
 	
+	@Column(name="archivo_imagen")
+	private String imageFileName;
+	
 	@Column(name="cantidad_inicial")
 	private Integer initialQuantity;
 	
@@ -128,6 +131,14 @@ public class Present implements Serializable{
 
 	public void setFree(boolean free) {
 		this.free = free;
+	}
+	
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 
 	@Override

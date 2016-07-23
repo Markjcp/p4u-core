@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class ImageResource {
 	
 	@GET
-	@Path("png/{name}")
+	@Path("{name}")
 	@Produces("image/png")
 	public Response getFullImage(@PathParam("name") String name) throws IOException {
 		Resource resource = new ClassPathResource("img/"+name);

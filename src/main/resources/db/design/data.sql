@@ -225,3 +225,19 @@ INSERT INTO `usuario_tiene_preferencia` (`id_usuario`, `id_preferencia`) VALUES
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/1.jpg' WHERE `id`='1';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/2.jpg' WHERE `id`='2';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/3.jpg' WHERE `id`='3';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/4.jpg' WHERE `id`='4';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/5.png' WHERE `id`='5';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/6.jpg' WHERE `id`='6';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/7.jpg' WHERE `id`='7';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/8.jpg' WHERE `id`='8';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/9.jpg' WHERE `id`='9';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/10.jpg' WHERE `id`='10';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/11.png' WHERE `id`='11';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/12.png' WHERE `id`='12';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/13.jpg' WHERE `id`='13';
+UPDATE `regalo` SET `archivo_imagen`='p4u/image/14.jpg' WHERE `id`='14';
+
