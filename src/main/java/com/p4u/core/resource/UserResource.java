@@ -3,6 +3,7 @@ package com.p4u.core.resource;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -109,6 +110,14 @@ public class UserResource {
 			result.add(userPreference.getPreference());
 		}
 		return result;
+	}
+	
+	
+	@DELETE
+	@Path("remove-all-preferences/{userId}")
+	public void removePreferences(@PathParam("userId") Long userId){
+		List<UserPreference> preferences = userPreferenceRepository.findByUserId(userId);
+		userPreferenceRepository.delete(preferences);
 	}
 	
 }
