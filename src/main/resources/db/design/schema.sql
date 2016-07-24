@@ -340,3 +340,14 @@ ALTER TABLE `usuario_tiene_preferencia`
 --
 ALTER TABLE `regalo` 
 ADD COLUMN `archivo_imagen` VARCHAR(45) NULL AFTER `gratis`;
+
+ALTER TABLE `regalo` 
+CHANGE COLUMN `imagen` `imagen` BLOB NOT NULL ;
+
+ALTER TABLE `usuario` 
+CHANGE COLUMN `facebook` `facebook` VARCHAR(128) NULL ,
+CHANGE COLUMN `domicilio` `domicilio` VARCHAR(256) NULL ,
+ADD COLUMN `nombre` VARCHAR(100) NULL AFTER `domicilio`,
+ADD COLUMN `apellido` VARCHAR(100) NULL AFTER `nombre`;
+
+

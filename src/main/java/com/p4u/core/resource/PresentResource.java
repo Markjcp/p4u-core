@@ -1,23 +1,29 @@
 package com.p4u.core.resource;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.p4u.core.beans.PresentPreferenceScore;
 import com.p4u.core.dao.CategoryPreferenceRepository;
 import com.p4u.core.dao.CategoryRepository;
@@ -33,6 +39,8 @@ import com.p4u.core.model.UserPreference;
 @Component
 @Path("/present")
 public class PresentResource {
+	
+	private static final String IMAGE_NAME_PREFIX = "p4u/image/";
 
 	@Autowired
 	@Qualifier("categoryRepository")
@@ -58,8 +66,15 @@ public class PresentResource {
 	@Path("create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Present create(Present present){
-		return presentRepository.save(present);
+	public Present create(@Context HttpServletRequest request,  String jsonRequest) throws JsonParseException, JsonMappingException, IOException{
+		ObjectMapper mapper = new ObjectMapper();
+		Present present = mapper.readValue(jsonRequest, Present.class);
+		Present result = presentRepository.save(present);
+		if(result.getImage()!=null){
+			result.setImageFileName(IMAGE_NAME_PREFIX+result.getId()+".jpg");
+			result = presentRepository.save(present);
+		}
+		return result;
 	}
 
 	@GET

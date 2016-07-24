@@ -58,6 +58,21 @@ public class UserResource {
 	}
 	
 	@POST
+	@Path("register")
+	@Produces(MediaType.APPLICATION_JSON)
+	public User register(User user) {
+		if(user.getEmail()!=null){
+			List<User> users =  userRepository.findByEmail(user.getEmail());
+			if(users!=null && !users.isEmpty()){
+				User userAux = users.iterator().next();
+				userAux.setPassword(user.getPassword());
+				return userRepository.save(userAux);
+			}
+		}
+		return userRepository.save(user);
+	}
+	
+	@POST
 	@Path("login/{email}/{password}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public LoginResult register(@PathParam("email") String email, @PathParam("password") String password){

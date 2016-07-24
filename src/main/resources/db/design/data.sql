@@ -241,3 +241,9 @@ UPDATE `regalo` SET `archivo_imagen`='p4u/image/12.png' WHERE `id`='12';
 UPDATE `regalo` SET `archivo_imagen`='p4u/image/13.jpg' WHERE `id`='13';
 UPDATE `regalo` SET `archivo_imagen`='p4u/image/14.jpg' WHERE `id`='14';
 
+UPDATE `usuario` SET `nombre`='Marcos', `apellido`='Forlenza' WHERE `id`='1';
+UPDATE `usuario` SET `nombre`='Luciano', `apellido`='Sorrentino' WHERE `id`='2';
+UPDATE `usuario` SET `nombre`='Marcos', `apellido`='Forlenza' WHERE `id`='3';
+UPDATE `usuario` SET `nombre`='Marcos' WHERE `id`='4';
+
+

@@ -34,6 +34,12 @@ public class User implements Serializable{
 	
 	@Column(name = "domicilio")
 	private String address;
+	
+	@Column(name = "nombre")
+	private String firstName;
+	
+	@Column(name = "apellido")
+	private String lastName;
 
 	public Long getId() {
 		return id;
@@ -81,6 +87,22 @@ public class User implements Serializable{
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	@Override
