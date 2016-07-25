@@ -40,6 +40,9 @@ public class User implements Serializable{
 	
 	@Column(name = "apellido")
 	private String lastName;
+	
+	@Column(name = "fecha_nacimiento")
+	private String birthDate;
 
 	public Long getId() {
 		return id;
@@ -103,6 +106,14 @@ public class User implements Serializable{
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	@Override

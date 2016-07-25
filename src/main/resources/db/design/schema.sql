@@ -350,4 +350,8 @@ CHANGE COLUMN `domicilio` `domicilio` VARCHAR(256) NULL ,
 ADD COLUMN `nombre` VARCHAR(100) NULL AFTER `domicilio`,
 ADD COLUMN `apellido` VARCHAR(100) NULL AFTER `nombre`;
 
+ALTER TABLE `usuario` 
+ADD COLUMN `fecha_nacimiento` VARCHAR(45) NULL AFTER `apellido`;
+
+
 
