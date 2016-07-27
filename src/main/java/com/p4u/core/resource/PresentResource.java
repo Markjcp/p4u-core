@@ -34,6 +34,7 @@ import com.p4u.core.model.Category;
 import com.p4u.core.model.CategoryPreference;
 import com.p4u.core.model.Present;
 import com.p4u.core.model.PresentCategory;
+import com.p4u.core.model.PresentCategoryId;
 import com.p4u.core.model.UserPreference;
 
 @Component
@@ -75,6 +76,16 @@ public class PresentResource {
 			result = presentRepository.save(present);
 		}
 		return result;
+	}
+	
+	@POST
+	@Path("add-present-to-category")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public PresentCategory addPresentToCategory(PresentCategoryId id){
+		PresentCategory result = new PresentCategory();
+		result.setId(id);
+		return presentCategoryRepository.save(result);
 	}
 
 	@GET

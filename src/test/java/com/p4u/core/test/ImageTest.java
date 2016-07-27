@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.p4u.core.model.Present;
 
@@ -51,7 +50,6 @@ public class ImageTest {
 		newPresent = mapper.readValue(json, Present.class);
 		System.out.println(newPresent);
 		stream.close();
-
 	}
 
 }
