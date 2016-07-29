@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.p4u.core.resource.CompanyResource;
 import com.p4u.core.resource.ImageResource;
+import com.p4u.core.resource.NotificationResource;
 import com.p4u.core.resource.PreferenceResource;
 import com.p4u.core.resource.PresentResource;
 import com.p4u.core.resource.UserResource;
@@ -18,6 +19,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(PreferenceResource.class);
 		register(CompanyResource.class);
 		register(ImageResource.class);
+		register(NotificationResource.class);
 	}
 
 }

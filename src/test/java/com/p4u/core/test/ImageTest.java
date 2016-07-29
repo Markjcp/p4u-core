@@ -14,7 +14,10 @@ import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.p4u.core.beans.PresentBuyOrder;
+import com.p4u.core.beans.PresentBuyResult;
 import com.p4u.core.model.Present;
 
 public class ImageTest {
@@ -50,6 +53,15 @@ public class ImageTest {
 		newPresent = mapper.readValue(json, Present.class);
 		System.out.println(newPresent);
 		stream.close();
+	}
+	
+	public static void main(String[] args) throws JsonProcessingException {
+		PresentBuyResult order = new PresentBuyResult();
+		order.setResultCode(1);
+		order.setErrorDescription("Sin stock");
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(order);
+		System.out.println(json);
 	}
 
 }

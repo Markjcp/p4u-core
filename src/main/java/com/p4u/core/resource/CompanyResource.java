@@ -41,7 +41,7 @@ public class CompanyResource {
 		company.setName(name);
 		company.setPassword(password);
 		company.setAddress(address);
-		company.setAddress(address);
+		company.setLocation(location);
 		company.setCode(0);
 		company = companyRepository.save(company);
 		company.setCode(Integer.valueOf(company.getId().toString()));

@@ -2,7 +2,9 @@ package com.p4u.core.resource;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,18 +26,30 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.p4u.core.beans.PresentBuyOrder;
+import com.p4u.core.beans.PresentBuyResult;
 import com.p4u.core.beans.PresentPreferenceScore;
 import com.p4u.core.dao.CategoryPreferenceRepository;
 import com.p4u.core.dao.CategoryRepository;
+import com.p4u.core.dao.ItemBoughtRepository;
+import com.p4u.core.dao.ItemRepository;
+import com.p4u.core.dao.NotificationItemRepository;
 import com.p4u.core.dao.PresentCategoryRepository;
 import com.p4u.core.dao.PresentRepository;
 import com.p4u.core.dao.UserPreferenceRepository;
+import com.p4u.core.dao.UserRepository;
 import com.p4u.core.model.Category;
 import com.p4u.core.model.CategoryPreference;
+import com.p4u.core.model.Item;
+import com.p4u.core.model.ItemBought;
+import com.p4u.core.model.NotificationItem;
 import com.p4u.core.model.Present;
 import com.p4u.core.model.PresentCategory;
 import com.p4u.core.model.PresentCategoryId;
+import com.p4u.core.model.User;
+import com.p4u.core.model.UserItemId;
 import com.p4u.core.model.UserPreference;
+import com.p4u.core.util.SessionIdentifierGenerator;
 
 @Component
 @Path("/present")
@@ -43,9 +57,33 @@ public class PresentResource {
 	
 	private static final String IMAGE_NAME_PREFIX = "p4u/image/";
 
+	private static final Integer GENERIC_ERROR = 2;
+
+	private static final String WRONG_STOCK = "Stock incorrecto";
+
+	private static final Integer STOCK_ERROR = 1;
+
+	private static final String NO_STOCK_MSG = "No hay stock suficiente para su P4U";
+
+	private static final String REDEEM_STATUS = "Canjeado";
+	
+	private static final String NO_REDEEM_STATUS = "Sin canjear";
+
+	private static final Integer OK_RESULT = 0;
+
+	private static final String UKNOWN_ERROR = "Error inesperado";
+	
+	@Autowired
+	@Qualifier("userRepository")
+	private UserRepository userRepository;
+
 	@Autowired
 	@Qualifier("categoryRepository")
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	@Qualifier("itemRepository")
+	private ItemRepository itemRepository;
 
 	@Autowired
 	@Qualifier("presentRepository")
@@ -62,6 +100,14 @@ public class PresentResource {
 	@Autowired
 	@Qualifier("userPreferenceRepository")
 	private UserPreferenceRepository userPreferenceRepository;
+	
+	@Autowired
+	@Qualifier("notificationItemRepository")
+	private NotificationItemRepository notificationItemRepository;
+	
+	@Autowired
+	@Qualifier("itemBoughtRepository")
+	private ItemBoughtRepository itemBoughtRepository;
 	
 	@POST
 	@Path("create")
@@ -87,6 +133,62 @@ public class PresentResource {
 		result.setId(id);
 		return presentCategoryRepository.save(result);
 	}
+	
+	@POST
+	@Path("buy-present")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public PresentBuyResult buyPresent(PresentBuyOrder order){
+		try {
+			User userFrom = userRepository.findOne(order.getUserFrom());
+			User userTo = userRepository.findOne(order.getUserTo());
+			Present present = presentRepository.findOne(order.getPresentId());
+			if(order.getQuantity()== null || order.getQuantity().equals(0)){
+				return new PresentBuyResult(GENERIC_ERROR,WRONG_STOCK);
+			}
+			if(order.getQuantity()>present.getStock()){
+				return new PresentBuyResult(STOCK_ERROR,NO_STOCK_MSG);
+			}
+			Item item = new Item();
+			item.setPresentCode(new SessionIdentifierGenerator().nextSessionId().substring(0,6).toUpperCase());
+			item.setPresentId(present.getId());
+			item.setProductCode("");
+			item.setState(NO_REDEEM_STATUS);
+			item = itemRepository.save(item);		
+			present.setStock(present.getStock()-order.getQuantity());
+			present = presentRepository.save(present);
+			NotificationItem notificationItem = new NotificationItem();
+			UserItemId userItemId = new UserItemId();
+			userItemId.setItemId(item.getId());
+			userItemId.setUserId(order.getUserTo());
+			notificationItem.setDate(new Date());
+			notificationItem.setId(userItemId);
+			notificationItem.setReceiver(userTo.getLastName() + ", " + userTo.getFirstName());
+			notificationItem.setSender(userFrom.getLastName() + ", " + userFrom.getFirstName());
+			notificationItem.setMsg(order.getText());
+			notificationItem.setEmail(userTo.getEmail());
+			notificationItem = notificationItemRepository.save(notificationItem);
+			ItemBought itemBought = new ItemBought();
+			UserItemId userItemIdFrom = new UserItemId();
+			userItemIdFrom.setItemId(item.getId());
+			userItemIdFrom.setUserId(order.getUserFrom());
+			itemBought.setDate(new Date());
+			itemBought.setId(userItemIdFrom);
+			itemBoughtRepository.save(itemBought);
+			return new PresentBuyResult(OK_RESULT,"");			
+		} catch (Exception e) {
+			return new PresentBuyResult(GENERIC_ERROR,UKNOWN_ERROR);
+		}		
+	}
+
+	@SuppressWarnings(value = { "unused" })
+	private Date addMinutes(Date date, int minutes) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.MINUTE, minutes);
+		return cal.getTime();
+	}
+	
 
 	@GET
 	@Path("all")

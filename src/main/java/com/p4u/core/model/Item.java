@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -31,6 +33,10 @@ public class Item implements Serializable{
 	
 	@Column(name="codigo_regalo")
 	private String presentCode;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_regalo", referencedColumnName = "id", insertable = false, updatable = false)
+	private Present present;
 
 	public Long getId() {
 		return id;
@@ -70,6 +76,14 @@ public class Item implements Serializable{
 
 	public void setPresentCode(String presentCode) {
 		this.presentCode = presentCode;
+	}
+	
+	public Present getPresent() {
+		return present;
+	}
+
+	public void setPresent(Present present) {
+		this.present = present;
 	}
 
 	@Override

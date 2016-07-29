@@ -353,5 +353,16 @@ ADD COLUMN `apellido` VARCHAR(100) NULL AFTER `nombre`;
 ALTER TABLE `usuario` 
 ADD COLUMN `fecha_nacimiento` VARCHAR(45) NULL AFTER `apellido`;
 
+ALTER TABLE `empresa` 
+CHANGE COLUMN `posicion` `posicion` VARCHAR(128) NULL DEFAULT NULL ;
 
+
+ALTER TABLE `regalo` 
+ADD COLUMN `minutos_de_expiracion` INT(11) NULL DEFAULT NULL AFTER `archivo_imagen`;
+
+ALTER TABLE `item_notifiacion_usuario` 
+ADD COLUMN `mensaje` VARCHAR(500) NULL AFTER `fecha_envio_mail`;
+
+ALTER TABLE `item` 
+DROP INDEX `codigo_producto` ;
 

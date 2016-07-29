@@ -247,3 +247,8 @@ UPDATE `usuario` SET `nombre`='Marcos', `apellido`='Forlenza' WHERE `id`='3';
 UPDATE `usuario` SET `nombre`='Marcos' WHERE `id`='4';
 
 
+UPDATE `item_notifiacion_usuario` SET `email`='mail@mail.com', `remitente`='Jose', `destinatario`='Otro', `vencimiento`='2016-07-29 00:08:14' WHERE `id_usuario`='2' and`id_item`='28';
+UPDATE `item_notifiacion_usuario` SET `email`='mail@mail.com', `remitente`='Juan', `destinatario`='Pedro', `vencimiento`='2016-07-29 00:08:14' WHERE `id_usuario`='1' and`id_item`='12';
+UPDATE `item_notifiacion_usuario` SET `email`='mail@mail.com' WHERE `id_usuario`='1' and`id_item`='26';
+
+

@@ -55,6 +55,9 @@ public class Present implements Serializable{
 	
 	@Column(name="gratis")
 	private boolean free;
+	
+	@Column(name="minutos_de_expiracion")
+	private Integer expirationMinutes;
 
 	public Long getId() {
 		return id;
@@ -150,6 +153,14 @@ public class Present implements Serializable{
 
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
+	}
+	
+	public Integer getExpirationMinutes() {
+		return expirationMinutes;
+	}
+
+	public void setExpirationMinutes(Integer expirationMinutes) {
+		this.expirationMinutes = expirationMinutes;
 	}
 
 	@Override
