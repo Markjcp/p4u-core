@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.p4u.core.beans.PresentBuyOrder;
 import com.p4u.core.beans.PresentBuyResult;
 import com.p4u.core.beans.PresentPreferenceScore;
+import com.p4u.core.beans.Transfer;
 import com.p4u.core.dao.CategoryPreferenceRepository;
 import com.p4u.core.dao.CategoryRepository;
 import com.p4u.core.dao.ItemBoughtRepository;
@@ -179,6 +180,48 @@ public class PresentResource {
 		} catch (Exception e) {
 			return new PresentBuyResult(GENERIC_ERROR,UKNOWN_ERROR);
 		}		
+	}
+	
+
+	@POST
+	@Path("redeem-present/{itemId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Item redeemItem(@PathParam("itemId") Long itemId){
+		Item item = itemRepository.findOne(itemId);
+		item.setState(REDEEM_STATUS);
+		return itemRepository.save(item);				
+	}
+	
+	@POST
+	@Path("transfer-present")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)	
+	public NotificationItem transferPresent(Transfer transfer) {
+		User userTo = userRepository.findOne(transfer.getUserTo());
+		UserItemId userItemId = new UserItemId();
+		userItemId.setItemId(transfer.getItemId());
+		userItemId.setUserId(transfer.getUserFrom());
+		NotificationItem notificationItem = notificationItemRepository.findOne(userItemId);
+		NotificationItem newNotificationItem = transferItem(notificationItem, transfer.getUserTo(), transfer.getMsg(), userTo.getLastName() + ", " + userTo.getFirstName());
+		notificationItemRepository.delete(notificationItem);
+		notificationItemRepository.save(newNotificationItem);
+		return newNotificationItem;
+	}
+	
+	public NotificationItem transferItem(NotificationItem item, Long userTo, String msg, String receiver){
+		NotificationItem result = new NotificationItem();
+		UserItemId id = new UserItemId();
+		id.setItemId(item.getId().getItemId());
+		id.setUserId(userTo);
+		result.setId(id);
+		result.setDate(item.getDate());
+		result.setEmail(item.getEmail());
+		result.setExpiration(item.getExpiration());
+		result.setExpired(item.isExpired());
+		result.setMsg(msg);
+		result.setReceiver(receiver);
+		result.setSender(item.getReceiver());
+		return result;
 	}
 
 	@SuppressWarnings(value = { "unused" })
