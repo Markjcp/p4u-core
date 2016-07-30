@@ -168,6 +168,7 @@ public class PresentResource {
 			notificationItem.setSender(userFrom.getLastName() + ", " + userFrom.getFirstName());
 			notificationItem.setMsg(order.getText());
 			notificationItem.setEmail(userTo.getEmail());
+			notificationItem.setExpired(false);
 			notificationItem = notificationItemRepository.save(notificationItem);
 			ItemBought itemBought = new ItemBought();
 			UserItemId userItemIdFrom = new UserItemId();
