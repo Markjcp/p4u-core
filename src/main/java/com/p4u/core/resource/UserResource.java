@@ -135,4 +135,17 @@ public class UserResource {
 		userPreferenceRepository.delete(preferences);
 	}
 	
+	@POST
+	@Path("update-preferences/{userId}/{preferences}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<UserPreference> updatePreferences(@PathParam("userId") Long userId, @PathParam("preferences") String preferencesStr){
+		List<UserPreference> preferences = userPreferenceRepository.findByUserId(userId);
+		userPreferenceRepository.delete(preferences);
+		String preferencesStrArr[] = preferencesStr.split(",");
+		for (String pref : preferencesStrArr) {
+			addPreference(userId, Long.valueOf(pref));
+		}
+		return userPreferenceRepository.findByUserId(userId);
+	}
+	
 }
