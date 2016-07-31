@@ -366,3 +366,6 @@ ADD COLUMN `mensaje` VARCHAR(500) NULL AFTER `fecha_envio_mail`;
 ALTER TABLE `item` 
 DROP INDEX `codigo_producto` ;
 
+ALTER TABLE `p4u`.`item_notifiacion_usuario` 
+CHANGE COLUMN `vencimiento` `vencimiento` TIMESTAMP NULL DEFAULT NULL ;
+

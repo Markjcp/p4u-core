@@ -2,12 +2,8 @@ package com.p4u.core.resource;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -28,7 +24,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.p4u.core.beans.PresentBuyOrder;
 import com.p4u.core.beans.PresentBuyResult;
-import com.p4u.core.beans.PresentPreferenceScore;
 import com.p4u.core.beans.Transfer;
 import com.p4u.core.dao.CategoryPreferenceRepository;
 import com.p4u.core.dao.CategoryRepository;
@@ -40,7 +35,6 @@ import com.p4u.core.dao.PresentRepository;
 import com.p4u.core.dao.UserPreferenceRepository;
 import com.p4u.core.dao.UserRepository;
 import com.p4u.core.model.Category;
-import com.p4u.core.model.CategoryPreference;
 import com.p4u.core.model.Item;
 import com.p4u.core.model.ItemBought;
 import com.p4u.core.model.NotificationItem;
@@ -49,7 +43,7 @@ import com.p4u.core.model.PresentCategory;
 import com.p4u.core.model.PresentCategoryId;
 import com.p4u.core.model.User;
 import com.p4u.core.model.UserItemId;
-import com.p4u.core.model.UserPreference;
+import com.p4u.core.service.PresentSelectorService;
 import com.p4u.core.util.SessionIdentifierGenerator;
 
 @Component
@@ -109,6 +103,10 @@ public class PresentResource {
 	@Autowired
 	@Qualifier("itemBoughtRepository")
 	private ItemBoughtRepository itemBoughtRepository;
+	
+	@Autowired
+	@Qualifier("presentSelectorService")
+	private PresentSelectorService presentSelectorService;	
 	
 	@POST
 	@Path("create")
@@ -225,15 +223,6 @@ public class PresentResource {
 		return result;
 	}
 
-	@SuppressWarnings(value = { "unused" })
-	private Date addMinutes(Date date, int minutes) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.MINUTE, minutes);
-		return cal.getTime();
-	}
-	
-
 	@GET
 	@Path("all")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -276,47 +265,7 @@ public class PresentResource {
 	@Path("by-user/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Present> presents(@PathParam("userId") Long userId) {
-		List<UserPreference> userPreferences = userPreferenceRepository.findByUserId(userId);
-		List<Present> aux = new ArrayList<Present>();
-		List<Present> result = new ArrayList<Present>();
-		for (UserPreference userPreference : userPreferences) {
-			List<CategoryPreference> catPrefs = categoryPreferenceRepository
-					.findByPreferenceId(userPreference.getId().getPreferenceId());
-			for (CategoryPreference categoryPreference : catPrefs) {
-				List<PresentCategory> presentCategories = presentCategoryRepository
-						.findByCategoryId(categoryPreference.getCategoryId());
-				for (PresentCategory presentCategory : presentCategories) {
-					aux.add(presentCategory.getPresent());
-				}
-			}
-		}
-		Map<Present,Integer> occurrences = countPresentOccurrences(aux);
-		List<PresentPreferenceScore> occurrencesScore = retrieveOrderedListForMostOccurrences(occurrences);
-		for (PresentPreferenceScore presentPreferenceScore : occurrencesScore) {
-			result.add(presentPreferenceScore.getPresent());
-		}
-		return result;
+		return presentSelectorService.choosePresentForUser(userPreferenceRepository, userId,
+				categoryPreferenceRepository, presentCategoryRepository);
 	}
-	
-	private List<PresentPreferenceScore> retrieveOrderedListForMostOccurrences(Map<Present,Integer> occurrences){
-		List<PresentPreferenceScore> result = new ArrayList<PresentPreferenceScore>();
-		for (Present present : occurrences.keySet()) {
-			result.add(new PresentPreferenceScore(present,occurrences.get(present)));
-		}
-		Collections.sort(result);
-		return result;
-	}
-	
-	private Map<Present,Integer> countPresentOccurrences(List<Present> presents){
-		Map<Present,Integer> result = new HashMap<Present,Integer>();
-		for (Present present : presents) {
-			if(result.get(present)==null){
-				result.put(present, 1);
-			}else{
-				result.put(present, result.get(present)+1);
-			}
-		}
-		return result;
-	}
-
 }
