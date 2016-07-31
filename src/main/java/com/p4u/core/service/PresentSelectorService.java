@@ -120,7 +120,9 @@ public class PresentSelectorService {
 		notificationItem.setMsg(selected.getCompany().getName()+PRESENT_MSG);
 		notificationItem.setEmail(user.getEmail());
 		notificationItem.setExpired(false);
-		notificationItem.setExpiration(addMinutes(new Date(), selected.getExpirationMinutes()));
+		if(selected.getExpirationMinutes()!=null){
+			notificationItem.setExpiration(addMinutes(new Date(), selected.getExpirationMinutes()));			
+		}
 		notificationItem = notificationItemRepository.save(notificationItem);
 		return notificationItem;
 	}
