@@ -229,6 +229,13 @@ public class PresentResource {
 	public List<Present> presents() {
 		return (List<Present>) presentRepository.findAll();
 	}
+	
+	@GET
+	@Path("by-company-id/{companyId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Present> presentsByCompanyId(@PathParam("companyId") Long companyId) {
+		return presentRepository.findByCompanyId(companyId);
+	}
 
 	@GET
 	@Path("all/by-category/{categoryId}")
